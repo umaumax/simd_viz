@@ -121,6 +121,8 @@ void neon_example_3(float result[16], const float base[16],
 
 ## how to install
 ```
+pip3 install graphviz
+
 WIP
 ```
 
