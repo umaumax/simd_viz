@@ -156,7 +156,7 @@ def main():
     parser.add_argument('--format', default="svg", type=str, help="svg,png,dot,jpg,pdf,bmp")
     parser.add_argument('--nodesep', default=1.0, type=float)
     parser.add_argument('--ranksep', default=1.0, type=float)
-    parser.add_argument('--verbose', default=False, type=bool)
+    parser.add_argument('--verbose', default=False, action='store_true')
     parser.add_argument('--pipe', action='store_true', help="use pipe as output (disable --output option)")
     parser.add_argument('filepath')
     args, extra_args = parser.parse_known_args()
