@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os.path
 import random
 import re
 import argparse
@@ -149,17 +150,31 @@ class ClangSIMDVizParser:
             self.traverse_body(node, child, f, top_id)
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-o', '--output', required=True, type=str)
     parser.add_argument('--format', default="svg", type=str, help="svg,png,dot,jpg,pdf,bmp")
     parser.add_argument('--nodesep', default=1.0, type=float)
     parser.add_argument('--ranksep', default=1.0, type=float)
     parser.add_argument('--verbose', default=False, type=bool)
+    parser.add_argument('--pipe', action='store_true', help="use pipe as output (disable --output option)")
     parser.add_argument('filepath')
     args, extra_args = parser.parse_known_args()
 
     main_graph = Digraph(format=args.format)
     main_graph.attr("graph", nodesep=str(args.nodesep), ranksep=str(args.ranksep))
     ClangSIMDVizParser(args.filepath, main_graph, verbose=args.verbose).parse_simd_code()
-    main_graph.render(args.output)
+
+    if args.pipe:
+        print(main_graph.pipe().decode('utf-8'))
+        return
+    # NOTE: to avoid xxx.svg -> xxx.svg.svg by using graphviz render() method
+    output_filepath = args.output
+    output_without_ext, ext = os.path.splitext(output_filepath)
+    if ext == "." + args.format:
+        output_filepath = output_without_ext
+    main_graph.render(output_filepath)
+
+
+if __name__ == '__main__':
+    main()
