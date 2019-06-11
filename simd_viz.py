@@ -51,6 +51,8 @@ class ClangSIMDVizParser:
 
     def parse_simd_code(self):
         def _lambda(parent, node, top_id):
+            if (str(node.extent.start.file) != self.filepath):
+                return top_id
             # NOTE: new subgraph for function
             if node.kind.name == "COMPOUND_STMT" and parent and parent.kind.name == "FUNCTION_DECL":
                 func_name = parent.spelling
