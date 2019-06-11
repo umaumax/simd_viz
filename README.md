@@ -130,6 +130,8 @@ WIP
 ```
 # Mac OS X
 LD_LIBRARY_PATH="/usr/local/opt/llvm/lib:$LD_LIBRARY_PATH" ./simd_viz.py example.cpp -o example
+# output is example.svg
+
 # Ubuntu
 LD_LIBRARY_PATH="/usr/lib/llvm-5.0/lib:$LD_LIBRARY_PATH" ./simd_viz.py example.cpp -o example
 ```
