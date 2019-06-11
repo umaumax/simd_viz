@@ -136,6 +136,12 @@ LD_LIBRARY_PATH="/usr/local/opt/llvm/lib:$LD_LIBRARY_PATH" ./simd_viz.py example
 LD_LIBRARY_PATH="/usr/lib/llvm-5.0/lib:$LD_LIBRARY_PATH" ./simd_viz.py example.cpp -o example
 ```
 
+### convert all cpp file
+```
+# Ubuntu, parallel
+find . -name "*.cpp" |sed 's/\.cpp$//' | parallel --no-notice -a - LD_LIBRARY_PATH="/usr/lib/llvm-5.0/lib:$LD_LIBRARY_PATH" ./simd_viz.py {}.cpp -o {}
+```
+
 ## how to see ast
 ```
 clang-check example.cpp -ast-dump -ast-dump-filter=neon -- -c
